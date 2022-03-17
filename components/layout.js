@@ -1,73 +1,74 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from './layout.module.css'
-import utilStyle from '../styles/utils.module.css'
+import LayoutStyles from '../styles/layout.module.css'
 import Link from 'next/link'
-
-const name = 'Kristian Cloma'
-export const siteTitle = 'Next.js Sample Website'
+import { useEffect } from 'react'
 
 export default function Layout({ children, home }){
+    const user_name = 'Kristian Cloma'
+    const site_name = 'PayFC'
+
+    useEffect( () => {
+        const body = document.querySelector("body");
+        document.body.id = "page-top"
+
+        return () => {
+          body.classList.remove("page-top");
+        }
+    });
+
     return (
-        <div className={styles.container}>
+        <div className={LayoutStyles.container}>
             <Head>
                 <link refl="icon" href="/favicon.ico" />
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta
                     name="description"
                     content="Learn how to build a personal website using Next.js"
                 />
-                <meta
-                    property="og:image"
-                    content={`https://og-image.vercel.app/${encodeURI(
-                        siteTitle
-                    )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-                />
-                <meta name="og:title" content={siteTitle} />
-                <meta name="twitter:card" content="summary_large_image" />
+                <title>{site_name}</title>
+                <script dangerouslySetInnerHTML={{ __html: `
+                if (document.cookie && document.cookie.includes('authed')) {
+                    window.location.href = "/dashboard"
+                }
+                ` }} />
             </Head>
-            <header className={styles.header}>
-                {home ? (
-                    <>
-                        <Image 
+            {/* Navigation */}
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+                <div class="container px-4">
+                    <a class="navbar-brand" href="#page-top">
+                        <Image
                             priority
-                            src="/images/profile.jpg"
-                            className={utilStyle.borderCircle}
-                            height={144}
-                            width={144}
-                            alt={name}
+                            src="/images/logo-square.jpg"
+                            className={LayoutStyles.logo_image}
+                            width={120}
+                            height={54}
                         />
-                        <h1 className={utilStyle.heading2xl}>{name}</h1>
-                    </>
-                ) : (
-                   <>
-                        <Link href="/">
-                            <a>
-                                <Image 
-                                    priority
-                                    src="/images/profile.jpg"
-                                    className={utilStyle.borderCircle}
-                                    height={108}
-                                    width={108}
-                                    alt={name}
-                                />    
-                            </a>
-                        </Link> 
-                        <h2 className={utilStyle.headingLg}>
-                            <Link href="/">
-                                <a className={utilStyle.colorInherit}>{name}</a>
-                            </Link>
-                        </h2>
-                    </>
-                )}
-            </header>
-            <main>{children}</main>
-            {!home && (
-                <div className={styles.backToHome}>
-                    <Link href="/">
-                        <a>Back to home</a>
-                    </Link>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/#services">Services</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                            <li class="nav-item">
+                                <Link href="/login">
+                                    <a class="nav-link">Login/Sign Up</a>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            )}
+            </nav>
+            <main>
+                {children}
+            </main>
+            {/* Footer */}
+            <footer class="py-5 bg-dark">
+                <div class="container px-4"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+            </footer>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"></script>
         </div>
     )
 }

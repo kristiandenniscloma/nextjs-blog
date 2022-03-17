@@ -1,49 +1,59 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
-import Link from 'next/link'
-import Date from '../components/date'
+import Head from "next/head";
+import Link from "next/link";
+import Layout from "../components/layout";
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
-
-export default function Home({ allPostsData }) {
-  return (
-    <Layout home>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-        <section>
-          <p>[Your Self Introduction]</p>
-          <p>
-            (This is a sample website - you’ll be building a site like this on{' '}
-            <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-          </p>
-        </section>
-        <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-          <h2 className={utilStyles.headingLg}>Blogs</h2>
-          <ul>
-            {allPostsData.map(({ id, date, title }) => (
-              <li className={utilStyles.listItem} key={id}>
-                <Link href={`/posts/${id}`}>
-                  <a>{title}</a>
-                </Link>
-                <br />
-                <small className={utilStyles.lightText}>
-                  <Date dateString={date} />
-                </small>
-              </li>
-            ))}
-          </ul>
-        </section>
-    </Layout>
-  )
+export default function Home() {
+    return (
+        <div>
+            <Layout home>
+                {/* Header */}
+                <header class="bg-primary bg-gradient text-white">
+                    <div class="container px-4 text-center">
+                        <h1 class="fw-bolder">Welcome to Scrolling Nav</h1>
+                        <p class="lead">A functional Bootstrap 5 boilerplate for one page scrolling websites</p>
+                        <a class="btn btn-lg btn-light" href="#about">Start scrolling!</a>
+                    </div>
+                </header>
+                {/* About Section */}
+                <section id="about">
+                    <div class="container px-4">
+                        <div class="row gx-4 justify-content-center">
+                            <div class="col-lg-8">
+                                <h2>About this page</h2>
+                                <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+                                <ul>
+                                    <li>Clickable nav links that smooth scroll to page sections</li>
+                                    <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                                    <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
+                                    <li>Minimal custom CSS so you are free to explore your own unique design options</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* Service Section */}
+                <section class="bg-light" id="services">
+                    <div class="container px-4">
+                        <div class="row gx-4 justify-content-center">
+                            <div class="col-lg-8">
+                                <h2>Services we offer</h2>
+                                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* Content Section */}
+                <section id="contact">
+                    <div class="container px-4">
+                        <div class="row gx-4 justify-content-center">
+                            <div class="col-lg-8">
+                                <h2>Contact us</h2>
+                                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat voluptatem dolor, provident officiis, id iusto! Obcaecati incidunt, qui nihil beatae magnam et repudiandae ipsa exercitationem, in, quo totam.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </Layout>
+        </div>
+    )
 }
